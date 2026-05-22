@@ -1,0 +1,209 @@
+{
+  "schema": "https://goose-skills.spacia.ai/schemas/index/v1.json",
+  "version": 1,
+  "generated_at": "2026-05-22T09:05:38.418Z",
+  "registry_url": "https://github.com/spacia-ai/goose-skills",
+  "skills": [
+    {
+      "name": "code-review",
+      "path": "standalone/code-review",
+      "description": "Review code changes for correctness, security, and reliability — focused, citation-style, no nitpicking.",
+      "extensions": [],
+      "requires": [],
+      "tools": [
+        "developer__shell",
+        "developer__text_editor"
+      ],
+      "tags": [
+        "code",
+        "review",
+        "security",
+        "reliability",
+        "standalone"
+      ],
+      "min_goose_version": "1.33.0",
+      "isolated": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "5c6f4a076cde2e0f4d07a6d833c2e5a81c10f6b137bd983ac078d343f1bff641",
+          "size": 2590
+        }
+      ],
+      "files_sha256": "3d68dfd5ad64445a2ccc09b573099fd7fbbc486427affdb31c3ca480588df518"
+    },
+    {
+      "name": "debugging-rust",
+      "path": "standalone/debugging-rust",
+      "description": "Debug Rust compile errors, lifetime issues, and runtime panics. Cargo invocation patterns + idiomatic fixes.",
+      "extensions": [],
+      "requires": [],
+      "tools": [
+        "developer__shell",
+        "developer__text_editor"
+      ],
+      "tags": [
+        "rust",
+        "debugging",
+        "compiler",
+        "standalone"
+      ],
+      "min_goose_version": "1.33.0",
+      "isolated": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "cdf3dc714527d1c7b9f0a42150d3f4650e569968f5456b8e34497044732d8b68",
+          "size": 2915
+        }
+      ],
+      "files_sha256": "a28e9cf473a7b32df03c168b7994770b55a9b35fa660a6dafe0a7aeb157b7d89"
+    },
+    {
+      "name": "exa",
+      "path": "extensions/exa",
+      "description": "Operator's manual for the Exa web-research MCP — when to search, how to dereference, citation patterns.",
+      "extensions": [
+        "exa"
+      ],
+      "requires": [
+        "exa"
+      ],
+      "tools": [
+        "exa__web_search_exa",
+        "exa__crawling_exa",
+        "exa__research_paper_search_exa",
+        "exa__company_research_exa",
+        "exa__github_search_exa",
+        "exa__wikipedia_search_exa",
+        "exa__linkedin_search_exa"
+      ],
+      "tags": [
+        "search",
+        "web",
+        "research",
+        "extension-skill"
+      ],
+      "min_goose_version": "1.33.0",
+      "isolated": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "4df7912fe243e89d4fd0796ab58358f37800b0e35b05f5788a09fa908656c41f",
+          "size": 3614
+        }
+      ],
+      "files_sha256": "33377360397100c6fd1c4188c0151afe5c1214899ae0e56710259b95c26ae022"
+    },
+    {
+      "name": "github",
+      "path": "extensions/github",
+      "description": "Operator's manual for the GitHub MCP — issues, PRs, comments, and code search. When to use REST vs GraphQL.",
+      "extensions": [
+        "github"
+      ],
+      "requires": [
+        "github"
+      ],
+      "tools": [],
+      "tags": [
+        "github",
+        "issues",
+        "pull-requests",
+        "code-review",
+        "extension-skill"
+      ],
+      "min_goose_version": "1.33.0",
+      "isolated": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "c993cdc9ac44c1e3522defaf3a1fd356fc296a45c96b0c80fb9ec0459fef5662",
+          "size": 2268
+        }
+      ],
+      "files_sha256": "f0eb8de17cffa8b88ddae50fe16b4f909a1149647002ba2797a2bf128d311cae"
+    },
+    {
+      "name": "slack-mcp",
+      "path": "extensions/slack-mcp",
+      "description": "Operator's manual for the Slack MCP — sending messages, fetching context, threads. Approval rules for outbound posts.",
+      "extensions": [
+        "slack"
+      ],
+      "requires": [
+        "slack"
+      ],
+      "tools": [],
+      "tags": [
+        "slack",
+        "communication",
+        "extension-skill"
+      ],
+      "min_goose_version": "1.33.0",
+      "isolated": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "19fa00e3953924a63ef6afaf1abcf771d25080858caa37dd8590b9cd4e0fee31",
+          "size": 2296
+        }
+      ],
+      "files_sha256": "d0c004b455374c045113b93d571960809ca74ce275b181217103d04e4c7f9deb"
+    },
+    {
+      "name": "supabase-mcp",
+      "path": "extensions/supabase-mcp",
+      "description": "Operator's manual for the Supabase MCP — database, edge functions, storage, advisors. When to read vs migrate.",
+      "extensions": [
+        "supabase"
+      ],
+      "requires": [
+        "supabase"
+      ],
+      "tools": [],
+      "tags": [
+        "supabase",
+        "postgres",
+        "database",
+        "extension-skill"
+      ],
+      "min_goose_version": "1.33.0",
+      "isolated": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "11cc145e0b9a5a1010b2831b883224b8d4da981ce779fb039ba091f95306e623",
+          "size": 2625
+        }
+      ],
+      "files_sha256": "03ea24d7a3d0ce0cc39fcbaa32cf94e5a93950334319c33dc38aa7fffe8df448"
+    },
+    {
+      "name": "writing-prd",
+      "path": "standalone/writing-prd",
+      "description": "Draft a product requirements document — problem framing, user stories, success criteria, scope cuts.",
+      "extensions": [],
+      "requires": [],
+      "tools": [
+        "developer__text_editor"
+      ],
+      "tags": [
+        "writing",
+        "product",
+        "prd",
+        "standalone"
+      ],
+      "min_goose_version": "1.33.0",
+      "isolated": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "f999081b64b2d9e136af6748e547f7e7919051e2866d9316223bd997f1e56405",
+          "size": 2537
+        }
+      ],
+      "files_sha256": "8089ad5b922739be068fda83ceeb64da6409caaffefd3e3e91cfb149cd267332"
+    }
+  ]
+}

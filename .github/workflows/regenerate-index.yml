@@ -1,0 +1,46 @@
+name: regenerate-index
+
+# Re-generates `index.json` whenever a `SKILL.md` or its assets change.
+# Runs on push to main and commits the regenerated file back. Skips
+# itself (the index commit) via the [skip ci] convention so we don't
+# loop forever.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'extensions/**'
+      - 'standalone/**'
+      - 'scripts/regenerate-index.mjs'
+      - '.github/workflows/regenerate-index.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Regenerate index.json
+        run: node scripts/regenerate-index.mjs
+
+      - name: Commit if changed
+        run: |
+          if ! git diff --quiet -- index.json; then
+            git config user.name 'goose-skills-bot'
+            git config user.email 'noreply@spacia.ai'
+            git add index.json
+            git commit -m 'chore(index): regenerate [skip ci]'
+            git push
+          else
+            echo 'index.json is up to date'
+          fi
