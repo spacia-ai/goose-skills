@@ -1,7 +1,7 @@
 {
   "schema": "https://goose-skills.spacia.ai/schemas/index/v1.json",
   "version": 1,
-  "generated_at": "2026-05-22T12:06:28.135Z",
+  "generated_at": "2026-05-22T12:07:13.975Z",
   "registry_url": "https://github.com/spacia-ai/goose-skills",
   "skills": [
     {
