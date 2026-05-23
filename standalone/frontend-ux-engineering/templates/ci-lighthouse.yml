@@ -1,0 +1,61 @@
+name: Performance (Lighthouse CI)
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [mobile, desktop]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Serve build
+        run: |
+          npx serve dist -l 3000 &
+          sleep 5
+        # Replace `dist` with the project's actual build output directory.
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli
+
+      - name: Run Lighthouse CI
+        run: |
+          lhci autorun \
+            --collect.url=http://localhost:3000/ \
+            --collect.url=http://localhost:3000/sign-in \
+            --collect.url=http://localhost:3000/dashboard \
+            --collect.numberOfRuns=3 \
+            --collect.settings.preset=${{ matrix.profile == 'mobile' && 'mobile' || 'desktop' }} \
+            --assert.assertions-from-file=templates/budgets.json \
+            --upload.target=temporary-public-storage
+        # `numberOfRuns=3` averages out Lighthouse run-to-run variance.
+        # Mobile is the primary gate; desktop is secondary because most field
+        # traffic is mobile and CWV at p75 typically fails mobile first.
+
+      - name: Upload report URL
+        if: always()
+        run: |
+          if [ -f .lighthouseci/links.json ]; then
+            cat .lighthouseci/links.json
+          fi

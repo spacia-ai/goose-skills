@@ -1,0 +1,61 @@
+name: Accessibility (axe)
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  axe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Serve build
+        run: |
+          npx serve dist -l 3000 &
+          sleep 5
+        # Replace `dist` with the project's actual build output directory.
+
+      - name: Install axe-cli
+        run: npm install -g @axe-core/cli
+
+      - name: Run axe against critical paths
+        # Replace the URL list with the project's critical user paths.
+        # Aim for 5-10 URLs covering the primary flows.
+        run: |
+          mkdir -p .frontend-ux/audit
+          axe http://localhost:3000/ \
+              http://localhost:3000/sign-in \
+              http://localhost:3000/sign-up \
+              http://localhost:3000/dashboard \
+              http://localhost:3000/account/settings \
+            --tags wcag2a,wcag2aa,wcag22aa \
+            --save .frontend-ux/audit/axe.json \
+            --exit
+
+      - name: Upload axe report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: axe-report
+          path: .frontend-ux/audit/axe.json
+
+      # `--exit` causes axe to exit non-zero on Critical/Serious findings,
+      # which fails the job. Adjust `--tags` to your conformance target;
+      # `wcag22aa` is the recommended baseline.

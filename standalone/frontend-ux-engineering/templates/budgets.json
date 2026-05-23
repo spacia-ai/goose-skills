@@ -1,0 +1,31 @@
+{
+  "ci": {
+    "assert": {
+      "preset": "lighthouse:recommended",
+      "assertions": {
+        "largest-contentful-paint": ["error", {"maxNumericValue": 2500}],
+        "interaction-to-next-paint": ["error", {"maxNumericValue": 200}],
+        "cumulative-layout-shift": ["error", {"maxNumericValue": 0.1}],
+        "total-blocking-time": ["warn", {"maxNumericValue": 200}],
+        "speed-index": ["warn", {"maxNumericValue": 3400}],
+        "first-contentful-paint": ["warn", {"maxNumericValue": 1800}],
+        "server-response-time": ["warn", {"maxNumericValue": 800}],
+        "total-byte-weight": ["warn", {"maxNumericValue": 1600000}],
+        "uses-text-compression": ["error", {}],
+        "uses-responsive-images": ["warn", {}],
+        "modern-image-formats": ["warn", {}],
+        "offscreen-images": ["warn", {}],
+        "unused-css-rules": ["warn", {"maxLength": 5}],
+        "unused-javascript": ["warn", {"maxLength": 5}],
+        "uses-rel-preconnect": ["warn", {}],
+        "render-blocking-resources": ["warn", {}],
+        "color-contrast": ["error", {}],
+        "tap-targets": ["error", {}],
+        "viewport": ["error", {}],
+        "html-has-lang": ["error", {}],
+        "image-alt": ["error", {}],
+        "label": ["error", {}]
+      }
+    }
+  }
+}

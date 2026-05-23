@@ -1,0 +1,62 @@
+name: Visual regression (Playwright)
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Build Storybook
+        run: npm run build-storybook
+        # If you don't use Storybook, replace with your build step
+        # and adjust the test target to your built app.
+
+      - name: Serve Storybook
+        run: |
+          npx serve storybook-static -l 6006 &
+          sleep 5
+
+      - name: Run Playwright visual tests
+        run: npx playwright test --project=${{ matrix.browser }}
+        env:
+          PLAYWRIGHT_BASE_URL: http://localhost:6006
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.browser }}
+          path: playwright-report/
+
+      - name: Update snapshots on labeled PR
+        # Add label `update-snapshots` to the PR to update baselines instead
+        # of failing the job. Reviewer should still inspect the diffs.
+        if: contains(github.event.pull_request.labels.*.name, 'update-snapshots')
+        run: |
+          npx playwright test --project=${{ matrix.browser }} --update-snapshots
+          # Commit logic intentionally omitted; configure a follow-up step or
+          # use a bot account if you want auto-commit-and-push behavior.
